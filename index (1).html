@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Salma Bibi, AI Engineer in Multan, Pakistan. Builds agentic AI systems, RAG pipelines and secure FastAPI backends that run in production.">
+<title>Salma Bibi | AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f4eee0;
+  --cream-2:#ece4d2;
+  --paper:#fbf8f0;
+  --ink:#1d2a26;
+  --ink-soft:#4b5a54;
+  --line:#d9cfb8;
+  --pine:#1f4d45;
+  --pine-2:#2c6a5e;
+  --gold:#b9801a;
+  --gold-soft:#f0dcae;
+  --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{
+  background:var(--cream);color:var(--ink);
+  font-family:'Instrument Sans',system-ui,sans-serif;font-size:1.02rem;line-height:1.65;
+  overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+body::before{ /* paper grain */
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(29,42,38,.05) 1px,transparent 1px);background-size:22px 22px;
+}
+h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;line-height:1.05;letter-spacing:-.025em}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+.mono{font-family:'DM Mono',monospace}
+.wrap{max-width:1080px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:1}
+
+/* scroll progress */
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--pine),var(--gold));z-index:200}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(244,238,224,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1080px;margin:0 auto;padding:0 1.5rem;height:64px;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.1rem}
+.brand i{font-style:normal;display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--pine);color:var(--cream);font-size:1rem}
+.links{display:flex;gap:1.6rem;list-style:none}
+.links a{text-decoration:none;font-size:.92rem;color:var(--ink-soft);position:relative;padding:.2rem 0}
+.links a::after{content:'';position:absolute;left:0;bottom:-2px;height:2px;width:0;background:var(--gold);transition:width .3s ease}
+.links a:hover,.links a.on{color:var(--ink)}
+.links a:hover::after,.links a.on::after{width:100%}
+.btn{display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;font-weight:600;font-size:.92rem;padding:.7rem 1.2rem;border-radius:999px;border:1.5px solid var(--ink);transition:transform .2s ease,background .2s ease,color .2s ease,box-shadow .2s ease}
+.btn.solid{background:var(--ink);color:var(--cream)}
+.btn.solid:hover{background:var(--pine);border-color:var(--pine);transform:translateY(-2px);box-shadow:0 8px 20px -8px rgba(31,77,69,.6)}
+.btn.ghost:hover{background:var(--ink);color:var(--cream);transform:translateY(-2px)}
+.menu-btn{display:none;background:none;border:1.5px solid var(--ink);border-radius:10px;padding:.4rem .7rem;font:inherit;cursor:pointer;color:var(--ink)}
+
+/* HERO */
+.hero{min-height:100svh;display:flex;align-items:center;padding:110px 0 60px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}
+.status{display:inline-flex;align-items:center;gap:.6rem;font-size:.85rem;padding:.4rem .9rem;border:1px solid var(--line);background:var(--paper);border-radius:999px;color:var(--ink-soft)}
+.status b{width:8px;height:8px;border-radius:50%;background:#2f9e6b;position:relative}
+.status b::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px solid #2f9e6b;opacity:0;animation:ping 2s ease-out infinite}
+@keyframes ping{0%{transform:scale(.5);opacity:.8}100%{transform:scale(1.6);opacity:0}}
+h1{font-size:clamp(3rem,8vw,5.8rem);font-weight:800;margin:1.2rem 0 .3rem}
+h1 .line{display:block;overflow:hidden}
+h1 .line span{display:block;transform:translateY(105%);animation:rise .9s cubic-bezier(.16,1,.3,1) forwards}
+h1 .line:nth-child(2) span{animation-delay:.12s;color:var(--pine)}
+@keyframes rise{to{transform:none}}
+.role{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(1.2rem,2.4vw,1.6rem);font-weight:500;color:var(--ink-soft);min-height:2.2em}
+.role .cur{display:inline-block;width:2px;height:1.1em;background:var(--gold);vertical-align:-.15em;margin-left:3px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.lead{max-width:34rem;margin:1.2rem 0 1.8rem;color:var(--ink-soft)}
+.cta{display:flex;gap:.8rem;flex-wrap:wrap}
+.fade{opacity:0;transform:translateY(14px);animation:fadeUp .8s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+
+/* TRACE CARD (signature) */
+.trace{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 30px 60px -30px rgba(29,42,38,.35),0 2px 0 var(--line);overflow:hidden;opacity:0;animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .5s forwards}
+.trace-head{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1rem;border-bottom:1px solid var(--line);background:var(--cream-2);font-size:.78rem}
+.trace-head .dots{display:flex;gap:6px}.trace-head .dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.trace-body{padding:1rem;display:grid;gap:.55rem;font-size:.8rem}
+.span{display:grid;grid-template-columns:7.6rem 1fr 3.2rem;gap:.7rem;align-items:center;opacity:0;transform:translateX(-8px);transition:opacity .4s,transform .4s}
+.span.show{opacity:1;transform:none}
+.span .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.span .bar{height:12px;background:var(--cream-2);border-radius:99px;position:relative;overflow:hidden}
+.span .bar i{position:absolute;top:0;bottom:0;border-radius:99px;width:0;transition:width 1s cubic-bezier(.16,1,.3,1)}
+.span.show .bar i{width:var(--w)}
+.span .ms{text-align:right;color:var(--ink-soft)}
+.trace-foot{display:flex;justify-content:space-between;padding:.8rem 1rem;border-top:1px dashed var(--line);font-size:.78rem;color:var(--ink-soft)}
+.trace-foot b{color:var(--pine)}
+.verdict{opacity:0;transition:opacity .5s}.verdict.show{opacity:1}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);overflow:hidden}
+.stat{padding:1.6rem 1.4rem;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat strong{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(2rem,4vw,2.8rem);font-weight:800;color:var(--pine);line-height:1}
+.stat span{font-size:.88rem;color:var(--ink-soft);display:block;margin-top:.5rem}
+
+/* SECTIONS */
+section{padding:6rem 0 1rem;position:relative}
+.sec-head{margin-bottom:2.4rem;max-width:40rem}
+.sec-head h2{font-size:clamp(2rem,4.5vw,3rem);font-weight:800}
+.sec-head p{margin-top:.8rem;color:var(--ink-soft)}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ABOUT */
+.about{display:grid;grid-template-columns:1.2fr .8fr;gap:3rem}
+.about p+p{margin-top:1rem}
+.about p{color:var(--ink-soft)}
+.about p strong{color:var(--ink)}
+.principles{background:var(--pine);color:var(--cream);border-radius:var(--radius);padding:1.8rem;align-self:start}
+.principles h3{font-size:1.3rem;margin-bottom:1rem}
+.principles li{list-style:none;padding:.65rem 0;border-top:1px solid rgba(244,238,224,.18);font-size:.95rem}
+.principles li:first-of-type{border-top:0}
+
+/* EXPERIENCE timeline */
+.tl{position:relative;padding-left:2rem}
+.tl::before{content:'';position:absolute;left:6px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.tl-fill{position:absolute;left:6px;top:8px;width:2px;height:0;background:var(--pine);transition:height .2s linear}
+.job{position:relative;padding:0 0 2.6rem}
+.job::before{content:'';position:absolute;left:-2rem;top:.55rem;width:14px;height:14px;border-radius:50%;background:var(--cream);border:3px solid var(--pine);transition:transform .3s,background .3s}
+.job:hover::before{background:var(--gold);transform:scale(1.25)}
+.job-top{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:baseline}
+.job h3{font-size:1.4rem}
+.job .co{color:var(--pine);font-weight:600}
+.job .when{font-size:.82rem;color:var(--ink-soft)}
+.job ul{margin-top:.8rem;display:grid;gap:.5rem;max-width:46rem}
+.job li{list-style:none;position:relative;padding-left:1.2rem;color:var(--ink-soft)}
+.job li::before{content:'';position:absolute;left:0;top:.72em;width:7px;height:2px;background:var(--gold)}
+
+/* PROJECTS */
+.proj{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:2rem;margin-bottom:1.4rem;position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s}
+.proj::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--pine);transform:scaleY(0);transform-origin:top;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.proj:hover{transform:translateY(-4px);box-shadow:0 24px 40px -28px rgba(29,42,38,.5)}
+.proj:hover::before{transform:scaleY(1)}
+.proj-top{display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;flex-wrap:wrap}
+.proj h3{font-size:clamp(1.4rem,3vw,1.9rem)}
+.tag{font-size:.78rem;padding:.25rem .7rem;border-radius:99px;background:var(--gold-soft);color:#6b4708}
+.proj .sub{margin:.5rem 0 1.2rem;color:var(--ink-soft);max-width:44rem}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}
+.cols h4{font-family:'Bricolage Grotesque',sans-serif;font-size:1rem;margin-bottom:.4rem;color:var(--pine)}
+.cols p,.cols li{font-size:.95rem;color:var(--ink-soft)}
+.cols ul{display:grid;gap:.4rem}
+.cols li{list-style:none;position:relative;padding-left:1.1rem}
+.cols li::before{content:'';position:absolute;left:0;top:.7em;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.4rem}
+.chip{font-size:.78rem;padding:.28rem .7rem;border:1px solid var(--line);border-radius:99px;background:var(--cream);transition:background .2s,color .2s,border-color .2s}
+.chip:hover{background:var(--pine);color:var(--cream);border-color:var(--pine)}
+.proj a.more{display:inline-block;margin-top:1.2rem;font-weight:600;color:var(--pine);text-decoration:none;border-bottom:2px solid var(--gold)}
+.proj a.more:hover{color:var(--gold)}
+
+/* SKILLS */
+.marquee{overflow:hidden;border-block:1px solid var(--line);background:var(--paper);margin:0 0 2.2rem;padding:.9rem 0;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;gap:2.4rem;width:max-content;animation:scroll 38s linear infinite;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:1.3rem;color:var(--pine)}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-track span::after{content:'\2726';color:var(--gold);margin-left:2.4rem;font-size:.9rem}
+@keyframes scroll{to{transform:translateX(-50%)}}
+.skills{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.skill{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem;transition:transform .3s,border-color .3s}
+.skill:hover{transform:translateY(-3px);border-color:var(--pine)}
+.skill h3{font-size:1.1rem;margin-bottom:.6rem}
+.skill p{font-size:.9rem;color:var(--ink-soft)}
+
+/* EDU + CONTACT */
+.edu{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:1.6rem 2rem}
+.edu h3{font-size:1.3rem}.edu p{color:var(--ink-soft)}
+.contact{background:var(--pine);color:var(--cream);border-radius:22px;padding:clamp(2rem,6vw,4rem);text-align:left;position:relative;overflow:hidden}
+.contact::after{content:'';position:absolute;right:-80px;top:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(var(--gold),transparent 70%);opacity:.35;animation:drift 9s ease-in-out infinite}
+@keyframes drift{50%{transform:translate(-30px,40px)}}
+.contact h2{font-size:clamp(2rem,5vw,3.4rem);font-weight:800;max-width:30rem}
+.contact p{margin:1rem 0 1.8rem;color:#cfe0da;max-width:32rem}
+.contact .btn{border-color:var(--cream);color:var(--cream)}
+.contact .btn.solid{background:var(--cream);color:var(--pine)}
+.contact .btn.solid:hover{background:var(--gold-soft);border-color:var(--gold-soft);box-shadow:none}
+.contact .btn.ghost:hover{background:var(--cream);color:var(--pine)}
+.contact-links{display:flex;gap:.8rem;flex-wrap:wrap;position:relative;z-index:1}
+footer{padding:2.5rem 0 3rem;color:var(--ink-soft);font-size:.85rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-grid,.about,.cols{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .skills{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .menu-btn{display:block}
+  .links{position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--cream);border-bottom:1px solid var(--line);display:none}
+  .links.open{display:flex}
+  .links a{display:block;padding:1rem 1.5rem}
+  .nav-cta{display:none}
+  .skills{grid-template-columns:1fr}
+  .span{grid-template-columns:6rem 1fr 2.8rem}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  h1 .line span,.fade,.trace,.reveal,.span,.verdict{opacity:1!important;transform:none!important}
+  .span .bar i{width:var(--w)!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<nav>
+  <div class="nav-in">
+    <a class="brand" href="#top"><i>S</i>Salma Bibi</a>
+    <ul class="links" id="links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="btn solid nav-cta" href="Salma_Bibi_Resume.pdf" download>Download résumé</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">Menu</button>
+  </div>
+</nav>
+
+<main id="top">
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="status fade" style="animation-delay:.05s"><b></b>Open to remote roles · Multan, Pakistan</span>
+      <h1><span class="line"><span>Salma</span></span><span class="line"><span>Bibi</span></span></h1>
+      <p class="role fade" style="animation-delay:.35s"><span id="typed"></span><span class="cur"></span></p>
+      <p class="lead fade" style="animation-delay:.45s">I build AI systems that run in production: agent workflows you can trace, retrieval pipelines that answer from your documents, and backends that handle login and permissions properly.</p>
+      <div class="cta fade" style="animation-delay:.55s">
+        <a class="btn solid" href="#projects">See my work</a>
+        <a class="btn ghost" href="mailto:salmamldev56@gmail.com">Email me</a>
+      </div>
+    </div>
+
+    <aside class="trace" aria-label="Example of an agent trace from my work">
+      <div class="trace-head mono"><div class="dots"><i></i><i></i><i></i></div><span>trace · research-copilot</span><span id="traceId">session 4f2a</span></div>
+      <div class="trace-body mono" id="traceBody">
+        <div class="span"><span class="nm">planner</span><span class="bar"><i style="--w:22%;left:0;background:var(--pine)"></i></span><span class="ms">412ms</span></div>
+        <div class="span"><span class="nm">researcher</span><span class="bar"><i style="--w:46%;left:18%;background:var(--pine-2)"></i></span><span class="ms">2.1s</span></div>
+        <div class="span"><span class="nm">tool: web_search</span><span class="bar"><i style="--w:30%;left:30%;background:var(--gold)"></i></span><span class="ms">1.3s</span></div>
+        <div class="span"><span class="nm">writer</span><span class="bar"><i style="--w:34%;left:62%;background:var(--pine)"></i></span><span class="ms">1.6s</span></div>
+        <div class="span"><span class="nm">verify</span><span class="bar"><i style="--w:12%;left:88%;background:var(--pine-2)"></i></span><span class="ms">0.4s</span></div>
+      </div>
+      <div class="trace-foot mono"><span>spans with session + user id</span><b class="verdict" id="verdict">71 / 71</b></div>
+    </aside>
+  </div>
+</header>
+
+<div class="wrap reveal">
+  <div class="stats">
+    <div class="stat"><strong data-count="23" data-suffix="%">0</strong><span>lower prediction error on a delivery ETA model</span></div>
+    <div class="stat"><strong data-count="87" data-suffix="%">0</strong><span>session completion on a mental-health kiosk</span></div>
+    <div class="stat"><strong data-count="40" data-suffix="%">0</strong><span>faster dashboard queries after MongoDB indexing</span></div>
+    <div class="stat"><strong data-count="9" data-suffix="+">0</strong><span>reviewed pull requests merged at Quantlix</span></div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Models are the easy part. Shipping them is the job.</h2></div>
+    <div class="about reveal">
+      <div>
+        <p>I'm an AI Engineer working across <strong>agentic AI, RAG, NLP and backend engineering</strong>. I choose the approach that fits the problem, whether that is a classical model, deep learning or an LLM, and then I own the work from data preparation to a running service.</p>
+        <p>Right now I work on long-running AI agents at <strong>Quantlix</strong>. Before that I built a multi-tenant SaaS platform, a healthcare kiosk and a delivery-time model. The unglamorous middle is where I spend most of my time: indexes, latency, safety layers, auth and compliance.</p>
+        <p>I only call something done after I've seen it work: a live request, a trace, a log line.</p>
+      </div>
+      <div class="principles">
+        <h3>How I work</h3>
+        <ul>
+          <li>Fix it, test it live, keep the proof, then commit.</li>
+          <li>Keep decisions that must be consistent out of the LLM.</li>
+          <li>Write down what a system can't do yet.</li>
+          <li>Treat login, permissions and data privacy as part of the feature.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Where I've worked</h2><p>SaaS, healthcare AI, logistics ML and now agentic systems.</p></div>
+    <div class="tl reveal" id="tl">
+      <div class="tl-fill" id="tlFill"></div>
+
+      <div class="job">
+        <div class="job-top"><h3>AI Engineer · <span class="co">Quantlix</span></h3><span class="when mono">Sept 2026 – Present</span></div>
+        <ul>
+          <li>Moved a LangGraph multi-agent research system to a fully self-hosted Langfuse stack (Postgres, Redis, ClickHouse, MinIO) with Docker Compose, closing a compliance gap raised in technical review.</li>
+          <li>Found that none of 71 traced spans carried session or user context. Fixed it by passing OpenTelemetry context through FastAPI handlers and confirmed it with live queries in Grafana Tempo.</li>
+          <li>Ran a fix, live test, proof, commit routine across 9+ merged pull requests covering config validation, idempotency and API response bugs.</li>
+          <li>Building the Wasl backend on FastAPI, PostgreSQL and Keycloak. The Phase 02 onboarding module is done and tested by hand against a real Keycloak login.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-top"><h3>AI Engineer · <span class="co">ClickTake Technologies</span></h3><span class="when mono">Apr 2026 – Aug 2026 · Multan</span></div>
+        <ul>
+          <li>Shipped a GDPR-compliant multi-tenant repair-shop SaaS on Next.js 14 and MongoDB, with JWT and role-based access across 4 permission tiers. No cross-tenant leaks in production.</li>
+          <li>Cut dashboard query time by 40% with compound MongoDB indexes, from about 2s to under 0.8s per page load.</li>
+          <li>Wrote an atomic loyalty-points engine that held up under 500+ concurrent writes, plus a GDPR pipeline that removed about 8 hours a week of manual PII work.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-top"><h3>AI Automation Engineer · <span class="co">TheEduAssist</span></h3><span class="when mono">Oct 2025 – Jan 2026</span></div>
+        <ul>
+          <li>Designed and deployed an NLP mental-health kiosk for 200+ users on Transformer models. It reached 87% session completion, the best engagement figure at the organization.</li>
+          <li>Added a safety layer on the Hugging Face Inference API that blocks harmful outputs in every conversation.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-top"><h3>ML Engineer Intern · <span class="co">Technocolabs Softwares</span></h3><span class="when mono">Apr 2025 – Jun 2025 · Remote</span></div>
+        <ul>
+          <li>Built a delivery ETA model with XGBoost on 50K+ records and 15+ features. Error fell by 23% and F1-score rose from 0.71 to 0.89.</li>
+          <li>Served it from a Dockerized FastAPI service on Hugging Face Spaces: sub-200ms latency for 1,000+ daily calls.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Projects</h2><p>Three systems, each with the problem it solves and what I built.</p></div>
+
+    <article class="proj reveal">
+      <div class="proj-top"><h3>Wasl Backend</h3><span class="tag">Quantlix · Identity and access API</span></div>
+      <p class="sub">The backend that decides who can sign in to Wasl and what they can see: login, onboarding, sessions, tenants and permissions.</p>
+      <div class="cols">
+        <div><h4>The problem</h4><p>Login and permissions are where most backends leak. Wasl needed a clean contract and a login flow that doesn't trust the browser more than it should.</p></div>
+        <div><h4>What I built</h4>
+          <ul>
+            <li>FastAPI, SQLModel and PostgreSQL, with schema changes tracked in Alembic.</li>
+            <li>Keycloak (OIDC) sign-in, server-side sessions in secure cookies, CSRF tokens.</li>
+            <li>Idempotency-Key and If-Match checks so retries and edits don't corrupt data.</li>
+            <li>Finished the Phase 02 onboarding module through a reviewed pull request, then tested the endpoints by hand.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="chips"><span class="chip">FastAPI</span><span class="chip">SQLModel</span><span class="chip">PostgreSQL</span><span class="chip">Alembic</span><span class="chip">Keycloak</span><span class="chip">OpenAPI</span><span class="chip">Docker</span></div>
+    </article>
+
+    <article class="proj reveal">
+      <div class="proj-top"><h3>Research Copilot with full observability</h3><span class="tag">Quantlix · LangGraph multi-agent</span></div>
+      <p class="sub">A planner, a researcher and a writer agent, where every step, cost and failure can be traced.</p>
+      <div class="cols">
+        <div><h4>The problem</h4><p>An earlier version had been marked complete without proof. A technical review found the claims didn't hold, so the system needed evidence, not assertions.</p></div>
+        <div><h4>What I built</h4>
+          <ul>
+            <li>Moved tracing to self-hosted Langfuse with Docker Compose.</li>
+            <li>Passed OpenTelemetry context through FastAPI so each span carries session and user IDs.</li>
+            <li>Checked each fix with a live request and a direct trace-store query before closing it.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="chips"><span class="chip">LangGraph</span><span class="chip">FastAPI</span><span class="chip">OpenTelemetry</span><span class="chip">Langfuse</span><span class="chip">ClickHouse</span><span class="chip">Redis</span><span class="chip">MinIO</span><span class="chip">Grafana Tempo</span></div>
+    </article>
+
+    <article class="proj reveal">
+      <div class="proj-top"><h3>AI Voice Assistant for Document Q&amp;A</h3><span class="tag">Voice-driven RAG</span></div>
+      <p class="sub">Ask a question about a PDF out loud and hear the answer, from a backend that serves many users at once.</p>
+      <div class="cols">
+        <div><h4>The problem</h4><p>Voice tools usually run as single-session scripts. This one needed to behave like a real service: background jobs, stored state and authentication.</p></div>
+        <div><h4>What I built</h4>
+          <ul>
+            <li>FastAPI with Postgres for state and Qdrant for vector search.</li>
+            <li>Redis and Celery run transcription, retrieval, answering and speech as background jobs.</li>
+            <li>faster-whisper for speech in, Groq LLaMA 3.3 70B for answers from retrieved text only, Coqui TTS for speech out.</li>
+            <li>API-key auth, Tesseract OCR for scanned PDFs, Alembic migrations.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="chips"><span class="chip">FastAPI</span><span class="chip">Qdrant</span><span class="chip">Celery</span><span class="chip">Redis</span><span class="chip">faster-whisper</span><span class="chip">Groq</span><span class="chip">Coqui TTS</span><span class="chip">Docker</span></div>
+      <a class="more" href="https://github.com/SalmaML56/ai-voice-doc-assistant" target="_blank" rel="noopener">View on GitHub</a>
+    </article>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Toolkit</h2></div>
+    <div class="marquee reveal" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+    <div class="skills reveal">
+      <div class="skill"><h3>Languages</h3><p>Python, SQL, JavaScript, TypeScript, Dart</p></div>
+      <div class="skill"><h3>AI and ML</h3><p>Scikit-learn, XGBoost, LightGBM, TensorFlow, CNN, ResNet50, Transfer Learning, Transformers, BERT, Whisper, Sentence Transformers, NLP</p></div>
+      <div class="skill"><h3>Generative AI and agents</h3><p>LangGraph, multi-agent systems, RAG, OpenAI API, Gemini API, Groq (LLaMA), Hugging Face, FAISS, Qdrant, Playwright</p></div>
+      <div class="skill"><h3>Backend and DevOps</h3><p>FastAPI, SQLModel, Alembic, Keycloak (OIDC), REST APIs, Node.js, Next.js, Docker, GitHub Actions, OpenTelemetry, Langfuse, Celery, Redis</p></div>
+      <div class="skill"><h3>Databases</h3><p>PostgreSQL, MongoDB, MySQL, ClickHouse</p></div>
+      <div class="skill"><h3>Mobile</h3><p>Flutter, Firebase, WebRTC, ML Kit</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head reveal"><h2>Education</h2></div>
+    <div class="edu reveal">
+      <h3>B.S. in Software Engineering</h3>
+      <p>Virtual University of Pakistan · CGPA 3.35 / 4.00 · Graduated Mar 2025</p>
+      <p>Final project (CS619): Tourism and Hotel Booking Management System</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact reveal">
+      <h2>Have an AI system that needs to ship?</h2>
+      <p>I'm open to remote AI and ML engineering roles. Email is the fastest way to reach me.</p>
+      <div class="contact-links">
+        <a class="btn solid" href="mailto:salmamldev56@gmail.com">salmamldev56@gmail.com</a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/salma-bibi-5a3190267" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn ghost" href="https://github.com/SalmaML56" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <footer><span>© 2026 Salma Bibi</span><span id="clock" class="mono"></span></footer>
+  </div>
+</section>
+</main>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll progress + timeline fill + active nav
+  var prog=document.getElementById('progress'), tl=document.getElementById('tl'), fill=document.getElementById('tlFill');
+  var navLinks=[].slice.call(document.querySelectorAll('.links a'));
+  var secs=navLinks.map(function(a){return document.querySelector(a.getAttribute('href'))});
+  function onScroll(){
+    var h=document.documentElement;
+    prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+    if(tl){var r=tl.getBoundingClientRect();var p=Math.min(Math.max((window.innerHeight*.6-r.top)/r.height,0),1);fill.style.height=(p*(r.height-16))+'px';}
+    var y=window.scrollY+120, cur=-1;
+    secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i});
+    navLinks.forEach(function(a,i){a.classList.toggle('on',i===cur)});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  // reveal on scroll
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+
+  // count-up stats
+  var cio=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(!e.isIntersecting)return;cio.unobserve(e.target);
+    var el=e.target,to=+el.dataset.count,suf=el.dataset.suffix||'';
+    if(reduce){el.textContent=to+suf;return}
+    var t0=performance.now();
+    (function step(t){var p=Math.min((t-t0)/1300,1),v=Math.round(to*(1-Math.pow(1-p,3)));el.textContent=v+suf;if(p<1)requestAnimationFrame(step)})(t0);
+  })},{threshold:.6});
+  document.querySelectorAll('[data-count]').forEach(function(el){cio.observe(el)});
+
+  // typed role line
+  var phrases=['AI Engineer','Agentic AI systems','RAG pipelines','FastAPI backends'];
+  var typed=document.getElementById('typed');
+  if(reduce){typed.textContent=phrases[0]+' · '+phrases[1]}
+  else{var pi=0,ci=0,del=false;
+    (function tick(){var w=phrases[pi];
+      typed.textContent=w.slice(0,ci);
+      if(!del&&ci<w.length){ci++;setTimeout(tick,70)}
+      else if(!del){del=true;setTimeout(tick,1500)}
+      else if(ci>0){ci--;setTimeout(tick,35)}
+      else{del=false;pi=(pi+1)%phrases.length;setTimeout(tick,250)}
+    })();}
+
+  // trace card: spans appear one by one, then verdict; replays on click
+  var spans=[].slice.call(document.querySelectorAll('#traceBody .span')), verdict=document.getElementById('verdict');
+  function playTrace(){
+    spans.forEach(function(s){s.classList.remove('show')});verdict.classList.remove('show');
+    spans.forEach(function(s,i){setTimeout(function(){s.classList.add('show')},reduce?0:900+i*520)});
+    setTimeout(function(){verdict.classList.add('show')},reduce?0:900+spans.length*520+300);
+  }
+  playTrace();
+  document.querySelector('.trace').addEventListener('click',playTrace);
+
+  // skills marquee
+  var items=['Python','FastAPI','LangGraph','RAG','Keycloak','PostgreSQL','OpenTelemetry','Langfuse','Docker','XGBoost','Transformers','Qdrant','Celery','Next.js','Flutter'];
+  var m=document.getElementById('marquee');
+  m.innerHTML=items.concat(items).map(function(t){return '<span>'+t+'</span>'}).join('');
+
+  // mobile menu
+  var mb=document.getElementById('menuBtn'),lk=document.getElementById('links');
+  mb.addEventListener('click',function(){var o=lk.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
+  lk.addEventListener('click',function(){lk.classList.remove('open');mb.setAttribute('aria-expanded',false)});
+
+  // Karachi time
+  function clock(){document.getElementById('clock').textContent='Multan, '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Karachi'})+' PKT'}
+  clock();setInterval(clock,30000);
+})();
+</script>
+</body>
+</html>
